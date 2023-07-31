@@ -15,12 +15,8 @@ class App extends React.Component {
       { id: 2, name: "Orange", price: 0.89 },
     ],
   };
-  nameRef = React.createRef();
-  priceRef = React.createRef();
-  add = () => {
+  add = (name, price) => {
     let id = this.state.items.length + 1;
-    let name = this.nameRef.current.value;
-    let price = this.priceRef.current.value;
     this.setState({
       items: [...this.state.items, { id, name, price }],
     });
@@ -34,6 +30,23 @@ class App extends React.Component {
             return <Item id={i.id} name={i.name} price={i.price} />;
           })}
         </ul>
+        <AddForm add={this.add} />
+      </div>
+    );
+  }
+}
+
+class AddForm extends React.Component {
+  nameRef = React.createRef();
+  priceRef = React.createRef();
+  add = () => {
+    let name = this.nameRef.current.value;
+    let price = this.priceRef.current.value;
+    this.props.add(name, price);
+  };
+  render() {
+    return (
+      <div>
         <input type="text" ref={this.nameRef} />
         <br />
         <input type="text" ref={this.priceRef} />
